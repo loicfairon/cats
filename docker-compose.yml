@@ -1,17 +1,26 @@
 version: '3.8'
 services:
   main:
-    container_name: main
-    build:
-      context: .
-      target: development
-    volumes:
-      - '.:/usr/src/app'
-      - /usr/src/app/node_modules
+    build: .
     ports:
       - '3000:3000'
-    command: 'npm run start:dev'
     networks:
       - webnet
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 networks:
   webnet:
+volumes:
+  db_data:
