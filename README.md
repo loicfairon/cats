@@ -2,4 +2,4 @@
 
 ## commands
 
-Docker compose : docker-compose -f docker-compose.yml up
+Run database: docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
